@@ -24,5 +24,8 @@ module.exports = {
     react: {
       version: 'detect', // Reactのバージョン自動検出
     },
+    'import/resolver': {
+      typescript: {},
+    },
   },
 };
