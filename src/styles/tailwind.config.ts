@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss'
-import { theme } from '@/lib/theme'
+import { theme } from '@/styles/theme'
 
 const config: Config = {
   content: [
