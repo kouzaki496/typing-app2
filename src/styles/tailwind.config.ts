@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss'
-import { theme } from '@/styles/theme'
+import { colors, fontFamily, backgroundImage, boxShadow, spacing, fontSize, fontWeight, letterSpacing } from './themes';
 
 const config: Config = {
   content: [
@@ -9,10 +9,16 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
-      colors: theme.colors,
-      backgroundImage: theme.backgroundImage,
-      boxShadow: theme.boxShadow,
-      fontFamily: theme.fontFamily,
+      extend: {
+        colors,
+        fontFamily,
+        fontSize,
+        fontWeight,
+        letterSpacing,
+        backgroundImage,
+        boxShadow,
+        spacing,
+      },
     },
   },
   plugins: [],
