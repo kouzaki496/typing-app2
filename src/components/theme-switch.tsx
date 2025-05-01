@@ -25,6 +25,7 @@ export function ThemeSwitch() {
         checked={isDark}
         onCheckedChange={handleThemeChange}
         aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        className="transition-all duration-300 data-[state=checked]:bg-white data-[state=unchecked]:bg-yellow-400"
       />
       <span><Moon className="size-4"/></span>
     </div>

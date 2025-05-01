@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import animate from "tailwindcss-animate";
 import { colors, fontFamily, backgroundImage, boxShadow, spacing, fontSize, fontWeight, letterSpacing } from './themes';
 
 const config: Config = {
@@ -21,6 +22,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [animate],
 }
 export default config
