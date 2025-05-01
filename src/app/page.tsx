@@ -1,5 +1,6 @@
-import { Button } from "@/components/index"
+import { Button } from "@/components/ui/index"
 import { SignInButton } from "@/components/SignInButton"
+
 export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center">

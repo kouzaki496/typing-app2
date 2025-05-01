@@ -1,6 +1,7 @@
 'use client';
 
-import Link from 'next/link';
+import Link from 'next/link'
+import { ThemeSwitch } from "@/components/theme-switch"
 
 export default function Header() {
   return (
@@ -16,6 +17,7 @@ export default function Header() {
           <Link href="/contact" className="hover:underline">
             Contact
           </Link>
+          <ThemeSwitch />
         </nav>
       </div>
     </header>
