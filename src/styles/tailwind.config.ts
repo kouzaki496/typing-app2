@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss'
 import animate from "tailwindcss-animate";
-import { colors, fontFamily, backgroundImage, boxShadow, spacing, fontSize, fontWeight, letterSpacing } from './themes';
+import { colors, fontFamily, backgroundImage, spacing, fontSize, fontWeight, letterSpacing } from './themes';
 
 const config: Config = {
   content: [
@@ -10,16 +10,15 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
-      extend: {
         colors,
         fontFamily,
         fontSize,
         fontWeight,
         letterSpacing,
-        backgroundImage,
-        boxShadow,
+        backgroundImage: {
+          'gradient-primary': 'var(--gradient-primary)',
+        },
         spacing,
-      },
     },
   },
   plugins: [animate],
