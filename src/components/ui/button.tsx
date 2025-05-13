@@ -42,6 +42,7 @@ function Button({
   variant,
   size,
   asChild = false,
+  style,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
@@ -49,10 +50,17 @@ function Button({
   }) {
   const Comp = asChild ? Slot : "button"
 
+  // gradient variant のときだけ backgroundImage を上書き
+  const mergedStyle =
+    variant === "gradient"
+      ? { backgroundImage: 'var(--gradient-primary)', ...style }
+      : style
+
   return (
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      style={mergedStyle}
       {...props}
     />
   )

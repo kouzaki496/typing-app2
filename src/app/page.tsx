@@ -12,7 +12,7 @@ export default function Home() {
       <Button variant="default">
         Gradient Button
       </Button>
-      <Button variant="gradient" style={{ backgroundImage: 'var(--gradient-primary)' }}>
+      <Button variant="gradient">
         Gradient Button
       </Button>
       <SignInButton />
