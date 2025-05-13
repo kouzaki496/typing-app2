@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Moon, Sun } from "lucide-react"
 
 export function ThemeSwitch() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {

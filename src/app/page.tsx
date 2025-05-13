@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/index"
 import { SignInButton } from "@/components/SignInButton"
-import { backgroundImage } from "@/styles/themes"
 
 export default function Home() {
   return (
