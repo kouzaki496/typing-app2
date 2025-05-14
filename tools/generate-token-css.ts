@@ -1,26 +1,19 @@
 import { lightColors, darkColors } from '../src/styles/themes/colors';
-import { parse, oklch } from 'culori';
 import fs from 'fs';
 
-// カラーコード→oklch文字列へ変換
-function toOklchStr(hex: string) {
-  const c = oklch(parse(hex));
-  if (!c) return hex;
-  return `oklch(${c.l.toFixed(3)} ${c.c.toFixed(3)} ${c.h !== undefined ? c.h.toFixed(3) : 0})`;
-}
-
-function toCssVars(obj: Record<string, string>, convert: (v: string) => string) {
+// 変換不要なのでそのまま返す
+function toCssVars(obj: Record<string, string>) {
   return Object.entries(obj)
-    .map(([key, value]) => `  --${key}: ${convert(value)};`)
+    .map(([key, value]) => `  --${key}: ${value};`)
     .join('\n');
 }
 
 const css = `:root {
-${toCssVars(lightColors, toOklchStr)}
+${toCssVars(lightColors)}
 }
 
 .dark {
-${toCssVars(darkColors, toOklchStr)}
+${toCssVars(darkColors)}
 }
 `;
 
