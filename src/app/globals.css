@@ -46,3 +46,8 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* ボタンのhover時に影色をカスタムプロパティで指定 */
+button:hover, [data-slot="button"]:hover {
+  --tw-shadow-color: var(--shadow);
+}
+

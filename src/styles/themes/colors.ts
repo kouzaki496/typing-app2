@@ -33,6 +33,8 @@ export const lightColors = {
   "sidebar-ring": "oklch(0.709 0.01 56.259)",
   "gradient-primary": "linear-gradient(120deg, #02024D 0%, #00D4FF 100%)",
   "gradient-accent": "linear-gradient(120deg, #4C6A8A 0%, #7dd3fc 100%)",
+  shadow: "oklch(0.85 0.01 260 / 0.8)",
+  "shadow-color": "oklch(0.85 0.01 260 / 0.8)",
 };
 
 export const darkColors = {
@@ -68,5 +70,7 @@ export const darkColors = {
   "sidebar-border": "oklch(1 0 0 / 10%)",
   "sidebar-ring": "oklch(0.553 0.013 58.071)",
   "gradient-primary": "linear-gradient(120deg, #02024D 0%, #00D4FF 100%)",
-  "gradient-accent": "linear-gradient(120deg, #4C6A8A 0%, #7dd3fc 100%)",
+  "gradient-accent": "linear-gradient(240deg, #02024D 0%, #00D4FF 100%)",
+  shadow: "oklch(0.85 0.01 260 / 0.8)",
+  "shadow-color": "oklch(0.85 0.01 260 / 0.8)",
 };

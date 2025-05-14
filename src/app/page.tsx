@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center">
       <h1 className="text-4xl font-bold text-blue-500">Hello Tailwind!</h1>
-      <Button className="text-white p-3 rounded-md shadow-metallic hover:bg-gradient-to-l">
+      <Button className="text-white p-3 rounded-md cursor-pointer">
         Gradient Button
       </Button>
       <Button>
