@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss'
 import animate from "tailwindcss-animate";
-import { fontFamily, spacing, fontSize, fontWeight, letterSpacing } from './themes';
+import { fontFamily, spacing, fontSize, fontWeight, letterSpacing } from './themes/index.js';
 
 const config: Config = {
   content: [
@@ -35,6 +35,9 @@ const config: Config = {
           input: "var(--input)",
           ring: "var(--ring)",
           // 必要に応じて他の色も追加
+        },
+        boxShadow: {
+          custom: "0 4px 24px 0 var(--shadow)", // 例: お好みで値を調整
         },
     },
   },

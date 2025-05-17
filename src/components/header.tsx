@@ -5,7 +5,7 @@ import { ThemeSwitch } from "@/components/theme-switch"
 
 export default function Header() {
   return (
-    <header className="w-full p-4 bg-background shadow-md">
+    <header className="w-full p-4 bg-background shadow-custom">
       <div className="container mx-auto flex items-center justify-between">
         <Link href="/" className="text-2xl font-bold">
           Typing App

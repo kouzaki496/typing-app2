@@ -33,7 +33,7 @@ export const lightColors = {
   "sidebar-ring": "oklch(0.563 0.142 241.060)",
   "gradient-primary": "linear-gradient(120deg, #02024D 0%, #00D4FF 100%)",
   "gradient-accent": "linear-gradient(120deg, #4C6A8A 0%, #7dd3fc 100%)",
-  shadow: "oklch(0.765 0.01 260 / 0.8)",
+  shadow: "oklch(0.765 0.7 260 / 0.8)",
   "shadow-color": "oklch(0.765 0.01 260 / 0.8)",
 };
 
