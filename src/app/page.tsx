@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/index";
 import { SignInButton } from "@/components/SignInButton";
 import { useState } from "react";
-import LanguageSelectModal from "@/components/LanguageSelectModal";
+import { LanguageSelectModal } from "@/components/index";
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
