@@ -2,19 +2,14 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/";
 import { Button, RadioGroup, RadioGroupItem } from "@/components/ui/";
 import LanguageCard from "@/components/languageCard";
+import { languageOptions, LanguageKey } from "@/constants/languageOptions";
 import { useState } from "react";
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  onSelect: (lang: string) => void;
+  onSelect: (lang: LanguageKey) => void;
 }
-
-const languages = [
-  { name: "JavaScript", icon: "💻" },
-  { name: "TypeScript", icon: "🧠" },
-  { name: "Python", icon: "🐍" },
-];
 
 export default function LanguageSelectModal({
   open,
@@ -23,7 +18,7 @@ export default function LanguageSelectModal({
 }: Props) {
 
   // 選択された言語を管理する
-  const [selected, setSelected] = useState<string>(languages[0].name);
+  const [selected, setSelected] = useState<LanguageKey>(languageOptions[0].key);
 
   // 選択された言語を確定する
   const handleConfirm = () => {
@@ -38,13 +33,13 @@ export default function LanguageSelectModal({
           <DialogTitle>言語を選んでください</DialogTitle>
         </DialogHeader>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {languages.map((lang) => (
+          {languageOptions.map((lang) => (
             <LanguageCard
-              key={lang.name}
+              key={lang.key}
               name={lang.name}
               icon={lang.icon}
-              selected={selected === lang.name}
-              onClick={() => setSelected(lang.name)}
+              selected={selected === lang.key}
+              onClick={() => setSelected(lang.key)}
             />
           ))}
         </div>
