@@ -11,6 +11,12 @@ type Props = {
   onSelect: (lang: LanguageKey) => void;
 }
 
+/**
+ * 言語選択モーダル
+ * @param open モーダルが開いているかどうか
+ * @param onClose モーダルを閉じる
+ * @param onSelect 選択された言語を確定する
+ */
 export default function LanguageSelectModal({
   open,
   onClose,
