@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/index";
 import { languageOptions } from "@/constants/languageOptions";
 import { useState } from "react";
 import { LanguageSelectModal } from "@/components/index";
-
+import Link from "next/link";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [language, setLanguage] = useState<string | null>(null);
@@ -22,6 +22,10 @@ export default function Home() {
         onClose={() => setIsOpen(false)}
         onSelect={(language) => setLanguage(language)}
       />
+
+      <Link href="/practice">
+        <Button>練習する</Button>
+      </Link>
     </main>
   )
 }

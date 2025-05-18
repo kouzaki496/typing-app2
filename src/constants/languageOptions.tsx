@@ -13,7 +13,7 @@ export const languageOptions: {
   {
     key: "javascript",
     name: "JavaScript",
-    icon: <SiJavascript size={32} color="#f7df1e" />,
+    icon: <SiJavascript size={32} color="#f7df1e" className="bg-black/80" />,
   },
   {
     key: "typescript",
