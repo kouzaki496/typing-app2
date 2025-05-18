@@ -1,9 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/index";
-import { SignInButton } from "@/components/SignInButton";
+import { languageOptions } from "@/constants/languageOptions";
 import { useState } from "react";
 import { LanguageSelectModal } from "@/components/index";
-import { languageOptions, LanguageKey } from "@/constants/languageOptions";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
