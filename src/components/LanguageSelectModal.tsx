@@ -1,6 +1,7 @@
 "use client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/";
 import { Button, RadioGroup, RadioGroupItem } from "@/components/ui/";
+import LanguageCard from "@/components/languageCard";
 import { useState } from "react";
 
 type Props = {
@@ -9,7 +10,11 @@ type Props = {
   onSelect: (lang: string) => void;
 }
 
-const languages = ["JavaScript", "TypeScript", "Python"];
+const languages = [
+  { name: "JavaScript", icon: "💻" },
+  { name: "TypeScript", icon: "🧠" },
+  { name: "Python", icon: "🐍" },
+];
 
 export default function LanguageSelectModal({
   open,
@@ -18,7 +23,7 @@ export default function LanguageSelectModal({
 }: Props) {
 
   // 選択された言語を管理する
-  const [selected, setSelected] = useState<string>(languages[0]);
+  const [selected, setSelected] = useState<string>(languages[0].name);
 
   // 選択された言語を確定する
   const handleConfirm = () => {
@@ -32,14 +37,17 @@ export default function LanguageSelectModal({
         <DialogHeader>
           <DialogTitle>言語を選んでください</DialogTitle>
         </DialogHeader>
-        <RadioGroup value={selected} onValueChange={setSelected}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {languages.map((lang) => (
-            <div key={lang} className="flex items-center space-x-2">
-              <RadioGroupItem value={lang} id={lang} />
-              <label htmlFor={lang}>{lang}</label>
-            </div>
+            <LanguageCard
+              key={lang.name}
+              name={lang.name}
+              icon={lang.icon}
+              selected={selected === lang.name}
+              onClick={() => setSelected(lang.name)}
+            />
           ))}
-        </RadioGroup>
+        </div>
         <Button onClick={handleConfirm} className="mt-4 w-full">
           決定
         </Button>
