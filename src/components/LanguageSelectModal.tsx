@@ -17,7 +17,6 @@ export default function LanguageSelectModal({
   onSelect,
 }: Props) {
 
-  // 選択された言語を管理する
   const [selected, setSelected] = useState<LanguageKey>(languageOptions[0].key);
 
   // 選択された言語を確定する
