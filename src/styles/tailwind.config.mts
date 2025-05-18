@@ -36,9 +36,6 @@ const config: Config = {
           ring: "var(--ring)",
           // 必要に応じて他の色も追加
         },
-        boxShadow: {
-          custom: "0 4px 24px 0 var(--shadow)", // 例: お好みで値を調整
-        },
     },
   },
   plugins: [animate],
