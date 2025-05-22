@@ -17,7 +17,7 @@ export default function Practice() {
 
   const isCorrect = sampleText.startsWith(input);
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4 p-6">
+    <div className="flex flex-col items-center justify-center gap-4 p-6">
       <h1 className="text-xl font-semibold">タイピング練習</h1>
       <p className="text-lg">{sampleText}</p>
       <input
