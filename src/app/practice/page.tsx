@@ -7,43 +7,52 @@ const sampleText = "console.log('Hello, World!');";
 
 export default function Practice() {
   const [input, setInput] = useState("");
+  const [actualInput, setActualInput] = useState(""); // 全ての入力
   const [startTime, setStartTime] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextValue = e.target.value;
+    const nextChar = nextValue.slice(-1);
+    const expectedChar = sampleText[input.length];
 
     if (!startTime && nextValue.length > 0) {
       setStartTime(Date.now());
     }
 
-    const expected = sampleText.slice(0, nextValue.length);
+    setActualInput(nextValue); // 入力された内容を記録（正解・ミス問わず）
 
-    if (nextValue === expected) {
-      setInput(nextValue);
+    if (nextChar === expectedChar) {
+      setInput(nextValue); // 正解時のみ input を進める
     }
   };
 
+
   const renderText = () => {
     return sampleText.split("").map((char, i) => {
-      const typedChar = input[i];
+      const typedChar = actualInput[i];
 
-      if (i < input.length) {
-        // 入力済 → 緑
-        return (
-          <span key={i} className="text-green-600">
-            {char}
-          </span>
-        );
+      if (typedChar != null) {
+        if (typedChar === char) {
+          return (
+            <span key={i} className="text-green-600">
+              {char}
+            </span>
+          );
+        } else {
+          return (
+            <span key={i} className="text-red-500 underline decoration-wavy decoration-red-500">
+              {char}
+            </span>
+          );
+        }
       } else if (i === input.length) {
-        // 次に打つ文字 → 下線
         return (
           <span key={i} className="underline underline-offset-4">
             {char}
           </span>
         );
       } else {
-        // 未入力 → グレー
         return (
           <span key={i} className="text-muted-foreground">
             {char}
@@ -52,6 +61,8 @@ export default function Practice() {
       }
     });
   };
+
+
 
   return (
     <div
