@@ -14,6 +14,13 @@
   80% { transform: translateX(4px); }
 }
 
+/* タイピング練習用のフォント設定 */
+.typing-text {
+  font-family: 'Courier New', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
