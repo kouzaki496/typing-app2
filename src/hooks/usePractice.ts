@@ -1,143 +1,79 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { questions } from "@/data/questions";
-import { isCorrectInput, isCompletelyCorrect } from "@/lib/typing/validation";
-import { recordTyping, TypingStats } from "@/lib/typing/recordTyping";
+import { useState, useEffect, useRef } from "react";
+import React from "react";
 
-const TOTAL_QUESTIONS_TO_FINISH = 3;
-
-export const usePractice = () => {
-  const router = useRouter();
-  const totalCount = Math.min(questions.length, TOTAL_QUESTIONS_TO_FINISH);
-  const maxIndex = totalCount - 1;
-  const [isCorrect, setIsCorrect] = useState(false);
-  const [isCompleteAndCorrect, setIsCompleteAndCorrect] = useState(false);
-
+export const usePractice = (sampleText: string) => {
   const [input, setInput] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [showResult, setShowResult] = useState(false);
-  const [correctCount, setCorrectCount] = useState(0);
-  const [totalElapsedTime, setTotalElapsedTime] = useState(0);
+  const [shake, setShake] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // ランダムに選択された問題の配列
-  const [selectedQuestions, setSelectedQuestions] = useState<typeof questions>([]);
-
-  const currentQuestion = selectedQuestions[currentIndex] || questions[0];
-
-  const [typingStats, setTypingStats] = useState<TypingStats>({
-    totalTyped: 0,
-    totalMistyped: 0,
-    mistypedChars: [],
-  });
-
-  // ランダムに問題を選択
+  // 振動効果をリセット
   useEffect(() => {
-    const shuffled = [...questions].sort(() => Math.random() - 0.5);
-    setSelectedQuestions(shuffled.slice(0, totalCount));
-  }, [totalCount]);
+    if (shake) {
+      const timer = setTimeout(() => {
+        setShake(false);
+      }, 300); // アニメーションの持続時間（0.3秒）に合わせる
+      return () => clearTimeout(timer);
+    }
+  }, [shake]);
 
-  const handleChange = (value: string) => {
-    if (!startTime) setStartTime(Date.now());
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const nextValue = e.target.value;
 
-    const index = value.length - 1;
-
-    // 入力が空か、期待される文字数を超えた場合はスキップ
-    if (index < 0 || index >= currentQuestion.text.length) {
-      setInput(value);
-      setIsCorrect(isCorrectInput(value, currentQuestion.text));
-      setIsCompleteAndCorrect(isCompletelyCorrect(value, currentQuestion.text));
-      return;
+    if (!startTime && nextValue.length > 0) {
+      setStartTime(Date.now());
     }
 
-    // タイプミスの判定
-    const expectedChar = currentQuestion.text[index];
-    const actualChar = value[index];
-    const isMistyped = actualChar !== expectedChar;
-
-    setTypingStats((prev) => ({
-      totalTyped: prev.totalTyped + 1,
-      totalMistyped: prev.totalMistyped + (isMistyped ? 1 : 0),
-      mistypedChars: isMistyped
-        ? [...prev.mistypedChars, expectedChar]
-        : prev.mistypedChars,
-    }));
-
-    setIsCorrect(isCorrectInput(value, currentQuestion.text));
-    setIsCompleteAndCorrect(isCompletelyCorrect(value, currentQuestion.text));
-    setInput(value);
-  };
-
-  const goToNext = () => {
-    if (currentIndex >= maxIndex) {
-      setShowResult(true);
-      return;
+    // 入力が期待される文字列の一部かチェック
+    if (sampleText.startsWith(nextValue)) {
+      setInput(nextValue);
+    } else {
+      // ミスタイプ時は振動のみ、入力は更新しない
+      console.log('ミスタイプ検出:', { nextValue, expected: sampleText.slice(0, nextValue.length) });
+      setShake(true);
     }
-    setCurrentIndex((prev) => prev + 1);
-    setInput("");
-    setStartTime(null);
   };
 
-  const handleSkip = () => goToNext();
-  const handleEnd = () => setShowResult(true);
-  const handleClose = () => router.push("/");
-
-  const resetState = () => {
-    setCurrentIndex(0);
-    setInput("");
-    setStartTime(null);
-    setShowResult(false);
-    setCorrectCount(0);
-    setTotalElapsedTime(0);
-    // 新しいランダムな問題セットを選択
-    const shuffled = [...questions].sort(() => Math.random() - 0.5);
-    setSelectedQuestions(shuffled.slice(0, totalCount));
-    setTypingStats({
-      totalTyped: 0,
-      totalMistyped: 0,
-      mistypedChars: [],
+  const renderText = (): React.ReactNode[] => {
+    return sampleText.split("").map((char, i) => {
+      if (i < input.length) {
+        // 正しく入力された文字
+        return React.createElement('span', {
+          key: i,
+          className: "text-green-600"
+        }, char);
+      } else if (i === input.length) {
+        // 現在のカーソル位置
+        return React.createElement('span', {
+          key: i,
+          className: "underline underline-offset-4"
+        }, char);
+      } else {
+        // まだ入力されていない文字
+        return React.createElement('span', {
+          key: i,
+          className: "text-muted-foreground"
+        }, char);
+      }
     });
   };
 
-  const handleRetry = () => resetState();
+  const reset = () => {
+    setInput("");
+    setStartTime(null);
+    setShake(false);
+  };
 
-  useEffect(() => {
-    // 完全一致していない場合は処理しない
-    if (!isCompleteAndCorrect) return;
-
-    // 経過時間を計測
-    const elapsed = startTime ? (Date.now() - startTime) / 1000 : 0;
-    setTotalElapsedTime((prev) => prev + elapsed);
-
-    // 打鍵情報を記録
-    const stats = recordTyping(input, currentQuestion.text);
-    setTypingStats((prev) => ({
-      totalTyped: prev.totalTyped + stats.totalTyped,
-      totalMistyped: prev.totalMistyped + stats.totalMistyped,
-      mistypedChars: [...prev.mistypedChars, ...stats.mistypedChars],
-    }));
-
-    // 正答数を更新
-    setCorrectCount((prev) => prev + 1);
-
-    const timeout = setTimeout(goToNext, 500);
-    return () => clearTimeout(timeout);
-  }, [isCompleteAndCorrect]);
+  const isComplete = input === sampleText;
 
   return {
     input,
+    startTime,
+    shake,
+    inputRef,
     handleChange,
-    currentQuestion,
-    isCorrect,
-    isCompleteAndCorrect,
-    showResult,
-    correctCount,
-    totalCount,
-    totalElapsedTime,
-    handleSkip,
-    handleEnd,
-    handleClose,
-    handleRetry,
-    typingStats,
+    renderText,
+    reset,
+    isComplete,
   };
 };
