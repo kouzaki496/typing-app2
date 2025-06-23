@@ -10,6 +10,9 @@ export const usePractice = (preferences?: UserPreferences) => {
   const [shake, setShake] = useState(false);
   const [mistakes, setMistakes] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [questionCount, setQuestionCount] = useState(0);
+  const [isSetFinished, setIsSetFinished] = useState(false);
+  const TOTAL_QUESTIONS_PER_SET = 3;
 
   // 初期化時に問題を選択
   useEffect(() => {
@@ -87,18 +90,29 @@ export const usePractice = (preferences?: UserPreferences) => {
     return result;
   };
 
-  const reset = () => {
+  const reset = (includeCounter = false) => {
     setInput("");
     setStartTime(null);
     setShake(false);
     setMistakes(0);
+    if (includeCounter) {
+      setQuestionCount(0);
+      setIsSetFinished(false);
+    }
   };
 
   const nextText = () => {
+    if (questionCount + 1 >= TOTAL_QUESTIONS_PER_SET) {
+      setIsSetFinished(true);
+      return;
+    }
+
     const newText = practiceService.getRandomText(preferences);
     setCurrentText(newText);
     reset();
+    setQuestionCount(prev => prev + 1);
   };
+
 
   const isComplete = currentText ? input === currentText.text : false;
 
@@ -137,6 +151,8 @@ export const usePractice = (preferences?: UserPreferences) => {
     reset,
     nextText,
     isComplete,
+    questionCount,
+    isSetFinished,
   };
 };
 

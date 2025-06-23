@@ -13,6 +13,9 @@ export default function Practice() {
     handleChange,
     renderText,
     nextText,
+    isSetFinished,
+    questionCount,
+    reset,
     isComplete,
   } = usePractice();
 
