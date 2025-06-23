@@ -1,0 +1,68 @@
+{
+  "texts": [
+    {
+      "id": "js-hello-world",
+      "text": "console.log('Hello, World!');",
+      "language": "javascript",
+      "difficulty": "beginner",
+      "category": "basics",
+      "description": "JavaScriptの基本的な出力文"
+    },
+    {
+      "id": "js-function",
+      "text": "function greet(name) { return `Hello, ${name}!`; }",
+      "language": "javascript",
+      "difficulty": "beginner",
+      "category": "functions",
+      "description": "JavaScriptの関数定義"
+    },
+    {
+      "id": "js-arrow-function",
+      "text": "const add = (a, b) => a + b;",
+      "language": "javascript",
+      "difficulty": "intermediate",
+      "category": "functions",
+      "description": "アロー関数の定義"
+    },
+    {
+      "id": "js-array-methods",
+      "text": "const numbers = [1, 2, 3, 4, 5].map(n => n * 2);",
+      "language": "javascript",
+      "difficulty": "intermediate",
+      "category": "arrays",
+      "description": "配列のmapメソッド"
+    },
+    {
+      "id": "js-async-await",
+      "text": "async function fetchData() { const response = await fetch('/api/data'); return response.json(); }",
+      "language": "javascript",
+      "difficulty": "advanced",
+      "category": "async",
+      "description": "async/awaitを使用した非同期処理"
+    },
+    {
+      "id": "py-hello-world",
+      "text": "print('Hello, World!')",
+      "language": "python",
+      "difficulty": "beginner",
+      "category": "basics",
+      "description": "Pythonの基本的な出力文"
+    },
+    {
+      "id": "py-function",
+      "text": "def greet(name): return f'Hello, {name}!'",
+      "language": "python",
+      "difficulty": "beginner",
+      "category": "functions",
+      "description": "Pythonの関数定義"
+    },
+    {
+      "id": "py-list-comprehension",
+      "text": "squares = [x**2 for x in range(10)]",
+      "language": "python",
+      "difficulty": "intermediate",
+      "category": "lists",
+      "description": "リスト内包表記"
+    }
+  ]
+}
