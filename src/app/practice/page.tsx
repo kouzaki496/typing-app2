@@ -3,16 +3,26 @@
 import { Input } from "@/components/ui/input";
 import { usePractice } from "@/hooks/usePractice";
 
-const sampleText = "console.log('Hello, World!');";
-
 export default function Practice() {
   const {
+    currentText,
     input,
     shake,
+    mistakes,
     inputRef,
     handleChange,
     renderText,
-  } = usePractice(sampleText);
+    nextText,
+    isComplete,
+  } = usePractice();
+
+  if (!currentText) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-6 p-6">
+        <h1 className="text-xl font-semibold">読み込み中...</h1>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -26,7 +36,7 @@ export default function Practice() {
     >
       <h1 className="text-xl font-semibold">タイピング練習</h1>
 
-      <div className="text-lg font-mono whitespace-pre-wrap max-w-xl break-words border rounded-md p-4 w-full min-h-[120px]">
+      <div className="text-lg font-mono whitespace-pre-wrap max-w-xl break-words border rounded-md p-4 w-full min-h-[120px] tracking-wide typing-text">
         {renderText()}
       </div>
 
@@ -40,18 +50,29 @@ export default function Practice() {
         autoFocus
       />
 
-      <p className={sampleText.startsWith(input) ? "text-green-600" : "text-red-600"}>
+      <p className={currentText.text.startsWith(input) ? "text-green-600" : "text-red-600"}>
         {input === ""
           ? "入力を開始してください"
-          : sampleText.startsWith(input)
+          : currentText.text.startsWith(input)
           ? "正しい入力中…"
           : "ミスがあります！"}
       </p>
 
-      {/* デバッグ用：振動状態を表示 */}
-      {/* <p className="text-xs text-gray-500">
-        振動状態: {shake ? "ON" : "OFF"} | 入力: "{input}" | 期待: "{sampleText.slice(0, input.length)}"
-      </p> */}
+      {/* 統計情報 */}
+      <div className="text-sm text-gray-600">
+        <p>ミス回数: {mistakes}</p>
+        <p>進捗: {input.length} / {currentText.text.length}</p>
+      </div>
+
+      {/* 完了時の次の問題ボタン */}
+      {isComplete && (
+        <button
+          onClick={nextText}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        >
+          次の問題
+        </button>
+      )}
     </div>
   );
 }
