@@ -12,7 +12,15 @@ export const usePractice = (preferences?: UserPreferences) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [questionCount, setQuestionCount] = useState(0);
   const [isSetFinished, setIsSetFinished] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false);
   const TOTAL_QUESTIONS_PER_SET = 3;
+
+  const [lastResult, setLastResult] = useState<{
+    wpm: number;
+    accuracy: number;
+    elapsedTime: number;
+    mistakes: number;
+  } | null>(null);
 
   // 初期化時に問題を選択
   useEffect(() => {
@@ -104,6 +112,7 @@ export const usePractice = (preferences?: UserPreferences) => {
   const nextText = () => {
     if (questionCount + 1 >= TOTAL_QUESTIONS_PER_SET) {
       setIsSetFinished(true);
+      setShowResultModal(true);
       return;
     }
 
@@ -120,9 +129,11 @@ export const usePractice = (preferences?: UserPreferences) => {
   useEffect(() => {
     if (isComplete && startTime) {
       const endTime = Date.now();
-      const elapsedTime = (endTime - startTime) / 1000; // 秒
+      const elapsedTime = (endTime - startTime) / 1000;
 
-      // 将来的にFirestoreに保存
+      const wpm = calculateWPM(input, elapsedTime);
+      const accuracy = calculateAccuracy(input, mistakes);
+
       const session = {
         textId: currentText?.id,
         startTime,
@@ -131,13 +142,28 @@ export const usePractice = (preferences?: UserPreferences) => {
         isComplete: true,
         mistakes,
         elapsedTime,
-        wpm: calculateWPM(input, elapsedTime),
-        accuracy: calculateAccuracy(input, mistakes),
+        wpm,
+        accuracy,
       };
 
       practiceService.savePracticeSession(session);
+
+      // 最後の結果を保存
+      setLastResult({
+        wpm,
+        accuracy,
+        elapsedTime,
+        mistakes,
+      });
     }
   }, [isComplete, startTime, currentText?.id, input, mistakes]);
+
+  const closeModal = () => {
+    setShowResultModal(false);
+    reset(true); // 次のセットに備えて完全リセット
+    const newText = practiceService.getRandomText(preferences);
+    setCurrentText(newText);
+  };
 
   return {
     currentText,
@@ -153,6 +179,9 @@ export const usePractice = (preferences?: UserPreferences) => {
     isComplete,
     questionCount,
     isSetFinished,
+    showResultModal,
+    closeModal,
+    lastResult,
   };
 };
 

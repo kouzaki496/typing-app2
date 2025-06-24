@@ -2,21 +2,25 @@
 
 import { Input } from "@/components/ui/input";
 import { usePractice } from "@/hooks/usePractice";
+import { ResultModal } from "@/components/resultModal";
 
 export default function Practice() {
   const {
     currentText,
-    input,
-    shake,
-    mistakes,
+    renderText,
     inputRef,
     handleChange,
-    renderText,
+    input,
+    shake,
+    isComplete,
     nextText,
     isSetFinished,
-    questionCount,
     reset,
-    isComplete,
+    questionCount,
+    lastResult,
+    showResultModal,
+    closeModal,
+    mistakes,
   } = usePractice();
 
   if (!currentText) {
@@ -76,6 +80,14 @@ export default function Practice() {
           次の問題
         </button>
       )}
+
+      {/* 結果モーダル */}
+      <ResultModal
+        isOpen={showResultModal}
+        onClose={closeModal}
+        onRetry={closeModal}
+        results={lastResult || { wpm: 0, accuracy: 0, elapsedTime: 0, mistakes: 0 }}
+      />
     </div>
   );
 }
