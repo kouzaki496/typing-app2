@@ -155,6 +155,15 @@ export const usePractice = (preferences?: UserPreferences) => {
         elapsedTime,
         mistakes,
       });
+
+      // 自動で次の問題に遷移（少し遅延を入れて結果を確認できるようにする）
+      const delayNextText = () => {
+        setTimeout(() => {
+          nextText();
+        }, 500);
+      };
+
+      delayNextText();
     }
   }, [isComplete, startTime, currentText?.id, input, mistakes]);
 

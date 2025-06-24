@@ -71,16 +71,6 @@ export default function Practice() {
         <p>進捗: {input.length} / {currentText.text.length}</p>
       </div>
 
-      {/* 完了時の次の問題ボタン */}
-      {isComplete && (
-        <button
-          onClick={nextText}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-        >
-          次の問題
-        </button>
-      )}
-
       {/* 結果モーダル */}
       <ResultModal
         isOpen={showResultModal}
