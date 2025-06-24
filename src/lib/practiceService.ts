@@ -105,7 +105,17 @@ class PracticeService {
   /**
    * 将来的なFirestore統合用のメソッド
    */
-  async savePracticeSession(session: any): Promise<void> {
+  async savePracticeSession(session: {
+    textId?: string;
+    startTime: number;
+    endTime: number;
+    input: string;
+    isComplete: boolean;
+    mistakes: number;
+    elapsedTime: number;
+    wpm: number;
+    accuracy: number;
+  }): Promise<void> {
     // TODO: Firestoreにセッションを保存
     console.log('Saving practice session:', session);
   }
@@ -113,7 +123,17 @@ class PracticeService {
   /**
    * 将来的なFirestore統合用のメソッド
    */
-  async getPracticeHistory(userId: string): Promise<any[]> {
+  async getPracticeHistory(userId: string): Promise<{
+    textId?: string;
+    startTime: number;
+    endTime: number;
+    input: string;
+    isComplete: boolean;
+    mistakes: number;
+    elapsedTime: number;
+    wpm: number;
+    accuracy: number;
+  }[]> {
     // TODO: Firestoreから練習履歴を取得
     console.log('Getting practice history for user:', userId);
     return [];

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import React from "react";
 import { practiceService } from "@/lib/practiceService";
 import { PracticeText, UserPreferences } from "@/types/practice";
@@ -98,7 +98,7 @@ export const usePractice = (preferences?: UserPreferences) => {
     return result;
   };
 
-  const reset = (includeCounter = false) => {
+  const reset = useCallback((includeCounter = false) => {
     setInput("");
     setStartTime(null);
     setShake(false);
@@ -107,9 +107,9 @@ export const usePractice = (preferences?: UserPreferences) => {
       setQuestionCount(0);
       setIsSetFinished(false);
     }
-  };
+  }, []);
 
-  const nextText = () => {
+  const nextText = useCallback(() => {
     if (questionCount + 1 >= TOTAL_QUESTIONS_PER_SET) {
       setIsSetFinished(true);
       setShowResultModal(true);
@@ -120,8 +120,7 @@ export const usePractice = (preferences?: UserPreferences) => {
     setCurrentText(newText);
     reset();
     setQuestionCount(prev => prev + 1);
-  };
-
+  }, [questionCount, preferences, reset]);
 
   const isComplete = currentText ? input === currentText.text : false;
 
@@ -165,7 +164,7 @@ export const usePractice = (preferences?: UserPreferences) => {
 
       delayNextText();
     }
-  }, [isComplete, startTime, currentText?.id, input, mistakes]);
+  }, [isComplete, startTime, currentText?.id, input, mistakes, nextText]);
 
   const closeModal = () => {
     setShowResultModal(false);

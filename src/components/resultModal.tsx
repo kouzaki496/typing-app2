@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 
 type ResultModalProps = {
   isOpen: boolean;
-  onClose: () => void;
   onRetry: () => void;
   results: {
     wpm: number;
@@ -14,7 +13,7 @@ type ResultModalProps = {
   };
 };
 
-export const ResultModal: React.FC<ResultModalProps> = ({ isOpen, onClose, onRetry, results }) => {
+export const ResultModal: React.FC<ResultModalProps> = ({ isOpen, onRetry, results }) => {
   const router = useRouter();
 
   if (!isOpen) return null;

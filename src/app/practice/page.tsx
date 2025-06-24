@@ -12,11 +12,6 @@ export default function Practice() {
     handleChange,
     input,
     shake,
-    isComplete,
-    nextText,
-    isSetFinished,
-    reset,
-    questionCount,
     lastResult,
     showResultModal,
     closeModal,
@@ -74,7 +69,6 @@ export default function Practice() {
       {/* 結果モーダル */}
       <ResultModal
         isOpen={showResultModal}
-        onClose={closeModal}
         onRetry={closeModal}
         results={lastResult || { wpm: 0, accuracy: 0, elapsedTime: 0, mistakes: 0 }}
       />
