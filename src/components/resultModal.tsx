@@ -26,11 +26,15 @@ export const ResultModal: React.FC<ResultModalProps> = ({ isOpen, onClose, onRet
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-background p-6 rounded-lg shadow-lg max-w-md w-full border border-border">
+      {/* 背景オーバーレイ */}
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+
+      {/* モーダルコンテンツ */}
+      <div className="relative bg-background p-6 rounded-lg shadow-2xl max-w-md w-full border border-border">
         <h2 className="text-xl font-bold mb-4 text-center">練習結果</h2>
         <ul className="mb-6 text-sm space-y-2">
           <li>WPM（入力速度）: <span className="font-semibold">{results.wpm}</span></li>
-          <li>正確さ: <span className="font-semibold">{results.accuracy}%</span></li>
+          <li>正確率: <span className="font-semibold">{results.accuracy}%</span></li>
           <li>ミスタイプ数: <span className="font-semibold">{results.mistakes}</span></li>
           <li>所要時間: <span className="font-semibold">{results.elapsedTime.toFixed(2)}秒</span></li>
         </ul>
