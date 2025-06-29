@@ -2,9 +2,21 @@
 
 import { Input } from "@/components/ui/input";
 import { usePractice } from "@/hooks/usePractice";
+import { useLanguage } from "@/hooks/useLanguage";
 import { ResultModal } from "@/components/resultModal";
+import LanguageSelectModal from "@/components/languageSelectModal";
+import { Button } from "@/components/ui/button";
+import { languageOptions } from "@/constants/languageOptions";
 
 export default function Practice() {
+  const {
+    selectedLanguage,
+    selectLanguage,
+    isLanguageModalOpen,
+    openLanguageModal,
+    closeLanguageModal,
+  } = useLanguage();
+
   const {
     currentText,
     renderText,
@@ -19,7 +31,7 @@ export default function Practice() {
     setResults,
     questionCount,
     TOTAL_QUESTIONS_PER_SET,
-  } = usePractice();
+  } = usePractice(selectedLanguage);
 
   if (!currentText) {
     return (
@@ -28,6 +40,8 @@ export default function Practice() {
       </div>
     );
   }
+
+  const currentLanguage = languageOptions.find(lang => lang.key === selectedLanguage);
 
   return (
     <div
@@ -39,7 +53,18 @@ export default function Practice() {
       }}
       onClick={() => inputRef.current?.focus()}
     >
-      <h1 className="text-xl font-semibold">タイピング練習</h1>
+      <div className="flex items-center justify-between w-full max-w-xl">
+        <h1 className="text-xl font-semibold">タイピング練習</h1>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={openLanguageModal}
+          className="flex items-center gap-2"
+        >
+          {currentLanguage?.icon}
+          <span>{currentLanguage?.name}</span>
+        </Button>
+      </div>
 
       {/* 進捗表示 */}
       <div className="text-sm text-muted-foreground">
@@ -73,6 +98,13 @@ export default function Practice() {
         <p>ミス回数: {mistakes}</p>
         <p>進捗: {input.length} / {currentText.text.length}</p>
       </div>
+
+      {/* 言語選択モーダル */}
+      <LanguageSelectModal
+        open={isLanguageModalOpen}
+        onClose={closeLanguageModal}
+        onSelect={selectLanguage}
+      />
 
       {/* 結果モーダル */}
       <ResultModal

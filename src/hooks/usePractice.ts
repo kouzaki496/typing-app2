@@ -2,8 +2,9 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import React from "react";
 import { practiceService } from "@/lib/practiceService";
 import { PracticeText, UserPreferences } from "@/types/practice";
+import { LanguageKey } from "@/constants/languageOptions";
 
-export const usePractice = (preferences?: UserPreferences) => {
+export const usePractice = (selectedLanguage: LanguageKey) => {
   const [currentText, setCurrentText] = useState<PracticeText | null>(null);
   const [input, setInput] = useState("");
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -48,11 +49,17 @@ export const usePractice = (preferences?: UserPreferences) => {
     };
   }, []);
 
-  // 初期化時に問題を選択
+  // 言語が変更されたときに新しい問題を選択
   useEffect(() => {
+    const preferences: UserPreferences = {
+      language: selectedLanguage,
+      difficulty: 'easy', // デフォルトはeasy
+    };
+
     const text = practiceService.getRandomText(preferences);
     setCurrentText(text);
-  }, [preferences]);
+    reset(true); // セットをリセット
+  }, [selectedLanguage]);
 
   // 振動効果をリセット
   useEffect(() => {
@@ -143,11 +150,16 @@ export const usePractice = (preferences?: UserPreferences) => {
       return;
     }
 
+    const preferences: UserPreferences = {
+      language: selectedLanguage,
+      difficulty: 'easy', // デフォルトはeasy
+    };
+
     const newText = practiceService.getRandomText(preferences);
     setCurrentText(newText);
     reset();
     setQuestionCount(prev => prev + 1);
-  }, [questionCount, preferences, reset]);
+  }, [questionCount, selectedLanguage, reset]);
 
   const isComplete = currentText ? input === currentText.text : false;
 
@@ -209,6 +221,12 @@ export const usePractice = (preferences?: UserPreferences) => {
   const closeModal = () => {
     setShowResultModal(false);
     reset(true); // 次のセットに備えて完全リセット
+
+    const preferences: UserPreferences = {
+      language: selectedLanguage,
+      difficulty: 'easy', // デフォルトはeasy
+    };
+
     const newText = practiceService.getRandomText(preferences);
     setCurrentText(newText);
   };
