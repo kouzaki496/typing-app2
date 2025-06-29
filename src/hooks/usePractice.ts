@@ -15,12 +15,38 @@ export const usePractice = (preferences?: UserPreferences) => {
   const [showResultModal, setShowResultModal] = useState(false);
   const TOTAL_QUESTIONS_PER_SET = 3;
 
+  // セット全体の結果を管理
+  const [setResults, setSetResults] = useState<Array<{
+    wpm: number;
+    accuracy: number;
+    elapsedTime: number;
+    mistakes: number;
+    textId: string;
+  }>>([]);
+
   const [lastResult, setLastResult] = useState<{
     wpm: number;
     accuracy: number;
     elapsedTime: number;
     mistakes: number;
   } | null>(null);
+
+  // セット全体の結果を計算
+  const calculateSetResults = useCallback((results: typeof setResults) => {
+    if (results.length === 0) return null;
+
+    const totalWpm = results.reduce((sum, result) => sum + result.wpm, 0);
+    const totalAccuracy = results.reduce((sum, result) => sum + result.accuracy, 0);
+    const totalElapsedTime = results.reduce((sum, result) => sum + result.elapsedTime, 0);
+    const totalMistakes = results.reduce((sum, result) => sum + result.mistakes, 0);
+
+    return {
+      wpm: Math.round(totalWpm / results.length),
+      accuracy: Math.round(totalAccuracy / results.length),
+      elapsedTime: totalElapsedTime,
+      mistakes: totalMistakes,
+    };
+  }, []);
 
   // 初期化時に問題を選択
   useEffect(() => {
@@ -106,6 +132,7 @@ export const usePractice = (preferences?: UserPreferences) => {
     if (includeCounter) {
       setQuestionCount(0);
       setIsSetFinished(false);
+      setSetResults([]);
     }
   }, []);
 
@@ -147,12 +174,25 @@ export const usePractice = (preferences?: UserPreferences) => {
 
       practiceService.savePracticeSession(session);
 
-      // 最後の結果を保存
-      setLastResult({
+      // 現在の問題の結果をセット結果に追加
+      const currentResult = {
         wpm,
         accuracy,
         elapsedTime,
         mistakes,
+        textId: currentText?.id || '',
+      };
+
+      setSetResults(prev => {
+        const newResults = [...prev, currentResult];
+
+        // 3問目が完了した場合、セット全体の結果を計算
+        if (newResults.length === TOTAL_QUESTIONS_PER_SET) {
+          const setResult = calculateSetResults(newResults);
+          setLastResult(setResult);
+        }
+
+        return newResults;
       });
 
       // 自動で次の問題に遷移（少し遅延を入れて結果を確認できるようにする）
@@ -164,7 +204,7 @@ export const usePractice = (preferences?: UserPreferences) => {
 
       delayNextText();
     }
-  }, [isComplete, startTime, currentText?.id, input, mistakes, nextText]);
+  }, [isComplete, startTime, currentText?.id, input, mistakes, nextText, calculateSetResults]);
 
   const closeModal = () => {
     setShowResultModal(false);
@@ -190,6 +230,8 @@ export const usePractice = (preferences?: UserPreferences) => {
     showResultModal,
     closeModal,
     lastResult,
+    setResults,
+    TOTAL_QUESTIONS_PER_SET,
   };
 };
 

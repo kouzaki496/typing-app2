@@ -16,6 +16,9 @@ export default function Practice() {
     showResultModal,
     closeModal,
     mistakes,
+    setResults,
+    questionCount,
+    TOTAL_QUESTIONS_PER_SET,
   } = usePractice();
 
   if (!currentText) {
@@ -37,6 +40,11 @@ export default function Practice() {
       onClick={() => inputRef.current?.focus()}
     >
       <h1 className="text-xl font-semibold">タイピング練習</h1>
+
+      {/* 進捗表示 */}
+      <div className="text-sm text-muted-foreground">
+        問題 {questionCount + 1} / {TOTAL_QUESTIONS_PER_SET}
+      </div>
 
       <div className="text-lg font-mono whitespace-pre-wrap max-w-xl break-words border rounded-md p-4 w-full min-h-[120px] tracking-wide typing-text">
         {renderText()}
@@ -71,6 +79,8 @@ export default function Practice() {
         isOpen={showResultModal}
         onRetry={closeModal}
         results={lastResult || { wpm: 0, accuracy: 0, elapsedTime: 0, mistakes: 0 }}
+        setResults={setResults}
+        questionCount={questionCount}
       />
     </div>
   );
