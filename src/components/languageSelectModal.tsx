@@ -37,11 +37,8 @@ export default function LanguageSelectModal({
 
   // 選択された言語を確定する
   const handleConfirm = () => {
-    console.log('LanguageSelectModal: Confirming selection:', selected);
-
     // 即座にローカルストレージに保存
     localStorage.setItem('selectedLanguage', selected);
-    console.log('LanguageSelectModal: Saved to localStorage:', selected);
 
     onSelect(selected);
     onClose();

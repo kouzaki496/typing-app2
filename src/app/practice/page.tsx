@@ -18,12 +18,6 @@ export default function Practice() {
     isInitialized,
   } = useLanguage();
 
-  console.log('Practice: Current state', {
-    selectedLanguage,
-    isInitialized,
-    isLanguageModalOpen
-  });
-
   const {
     currentText,
     renderText,

@@ -19,13 +19,7 @@ class PracticeService {
    * 言語でフィルタリング
    */
   getTextsByLanguage(language: string): PracticeText[] {
-    console.log('Filtering by language:', language);
-    console.log('Available texts:', this.texts.map(t => ({ id: t.id, language: t.language })));
-
-    const filtered = this.texts.filter(text => text.language === language);
-    console.log('Filtered texts:', filtered.map(t => ({ id: t.id, language: t.language })));
-
-    return filtered;
+    return this.texts.filter(text => text.language === language);
   }
 
   /**
@@ -55,75 +49,38 @@ class PracticeService {
    * ユーザーの設定に基づいて問題を取得
    */
   getTextsByPreferences(preferences: UserPreferences): PracticeText[] {
-    console.log('Getting texts by preferences:', preferences);
-
-    const filtered = this.texts.filter(text => {
+    return this.texts.filter(text => {
       const languageMatch = text.language === preferences.language;
       const difficultyMatch = text.difficulty === preferences.difficulty;
       const categoryMatch = !preferences.category || text.category === preferences.category;
 
-      console.log(`Text ${text.id}:`, {
-        language: text.language,
-        expectedLanguage: preferences.language,
-        languageMatch,
-        difficulty: text.difficulty,
-        expectedDifficulty: preferences.difficulty,
-        difficultyMatch,
-        category: text.category,
-        expectedCategory: preferences.category,
-        categoryMatch
-      });
-
       return languageMatch && difficultyMatch && categoryMatch;
     });
-
-    console.log('Filtered by preferences:', filtered.map(t => ({ id: t.id, language: t.language })));
-    return filtered;
   }
 
   /**
    * ランダムに問題を選択
    */
   getRandomText(preferences?: UserPreferences): PracticeText {
-    console.log('Getting random text with preferences:', preferences);
-
     const availableTexts = preferences
       ? this.getTextsByPreferences(preferences)
       : this.texts;
 
-    console.log('Available texts count:', availableTexts.length);
-
     if (availableTexts.length === 0) {
-      console.log('No texts match preferences, falling back to language filter');
       // 設定に合う問題がない場合は、言語のみでフィルタリング
       const fallbackTexts = preferences
         ? this.getTextsByLanguage(preferences.language)
         : this.texts;
 
-      console.log('Fallback texts count:', fallbackTexts.length);
-
       if (fallbackTexts.length === 0) {
-        console.log('No texts found, returning first text');
         // それでもない場合は最初の問題を返す
         return this.texts[0];
       }
 
-      const selected = fallbackTexts[Math.floor(Math.random() * fallbackTexts.length)];
-      console.log('Selected fallback text:', {
-        id: selected.id,
-        language: selected.language,
-        text: selected.text.substring(0, 50) + '...'
-      });
-      return selected;
+      return fallbackTexts[Math.floor(Math.random() * fallbackTexts.length)];
     }
 
-    const selected = availableTexts[Math.floor(Math.random() * availableTexts.length)];
-    console.log('Selected text:', {
-      id: selected.id,
-      language: selected.language,
-      text: selected.text.substring(0, 50) + '...'
-    });
-    return selected;
+    return availableTexts[Math.floor(Math.random() * availableTexts.length)];
   }
 
   /**

@@ -63,25 +63,16 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
 
   // 言語が変更されたときに新しい問題を選択（初期化完了後のみ）
   useEffect(() => {
-    console.log('usePractice: useEffect triggered', { selectedLanguage, isLanguageInitialized });
-
     if (!isLanguageInitialized) {
-      console.log('usePractice: Language not initialized yet, skipping...');
       return;
     }
-
-    console.log('usePractice: Language changed to:', selectedLanguage);
 
     const preferences: UserPreferences = {
       language: selectedLanguage,
       difficulty: 'easy', // デフォルトはeasy
     };
 
-    console.log('usePractice: Creating preferences:', preferences);
-
     const text = practiceService.getRandomText(preferences);
-    console.log('usePractice: Selected text:', { id: text.id, language: text.language });
-
     setCurrentText(text);
     reset(true); // セットをリセット
   }, [selectedLanguage, isLanguageInitialized, reset]);
@@ -113,11 +104,6 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
       setInput(nextValue);
     } else {
       // ミスタイプ時は振動のみ、入力は更新しない
-      console.log('ミスタイプ検出:', {
-        nextValue,
-        expected: expectedText.slice(0, nextValue.length),
-        fullExpected: expectedText
-      });
       setShake(true);
       setMistakes(prev => prev + 1);
     }

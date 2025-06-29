@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center p-8">
-      <h1 className="text-4xl font-bold mb-4">Welcome to CodeTapper</h1>
+      <h1 className="text-4xl font-bold mb-4">Welcome to Clyper</h1>
       <p className="mb-6 text-gray-500">エンジニア向けタイピング練習アプリ</p>
       <p>選択された言語: {selectedLanguage}</p>
       <Button onClick={() => setIsOpen(true)}>言語を選ぶ</Button>
