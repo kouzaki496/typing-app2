@@ -15,7 +15,14 @@ export default function Practice() {
     isLanguageModalOpen,
     openLanguageModal,
     closeLanguageModal,
+    isInitialized,
   } = useLanguage();
+
+  console.log('Practice: Current state', {
+    selectedLanguage,
+    isInitialized,
+    isLanguageModalOpen
+  });
 
   const {
     currentText,
@@ -31,7 +38,15 @@ export default function Practice() {
     setResults,
     questionCount,
     TOTAL_QUESTIONS_PER_SET,
-  } = usePractice(selectedLanguage);
+  } = usePractice(selectedLanguage, isInitialized);
+
+  if (!isInitialized) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-6 p-6">
+        <h1 className="text-xl font-semibold">初期化中...</h1>
+      </div>
+    );
+  }
 
   if (!currentText) {
     return (
@@ -104,6 +119,7 @@ export default function Practice() {
         open={isLanguageModalOpen}
         onClose={closeLanguageModal}
         onSelect={selectLanguage}
+        currentLanguage={selectedLanguage}
       />
 
       {/* 結果モーダル */}

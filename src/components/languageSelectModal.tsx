@@ -3,12 +3,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/";
 import LanguageCard from "@/components/languageCard";
 import { languageOptions, LanguageKey } from "@/constants/languageOptions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Props = {
   open: boolean;
   onClose: () => void;
   onSelect: (lang: LanguageKey) => void;
+  currentLanguage?: LanguageKey;
 }
 
 /**
@@ -16,17 +17,32 @@ type Props = {
  * @param open モーダルが開いているかどうか
  * @param onClose モーダルを閉じる
  * @param onSelect 選択された言語を確定する
+ * @param currentLanguage 現在選択されている言語
  */
 export default function LanguageSelectModal({
   open,
   onClose,
   onSelect,
+  currentLanguage = 'javascript',
 }: Props) {
 
-  const [selected, setSelected] = useState<LanguageKey>(languageOptions[0].key);
+  const [selected, setSelected] = useState<LanguageKey>(currentLanguage);
+
+  // モーダルが開かれたときに現在の言語を選択状態に設定
+  useEffect(() => {
+    if (open) {
+      setSelected(currentLanguage);
+    }
+  }, [open, currentLanguage]);
 
   // 選択された言語を確定する
   const handleConfirm = () => {
+    console.log('LanguageSelectModal: Confirming selection:', selected);
+
+    // 即座にローカルストレージに保存
+    localStorage.setItem('selectedLanguage', selected);
+    console.log('LanguageSelectModal: Saved to localStorage:', selected);
+
     onSelect(selected);
     onClose();
   }

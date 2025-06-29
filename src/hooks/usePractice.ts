@@ -4,7 +4,7 @@ import { practiceService } from "@/lib/practiceService";
 import { PracticeText, UserPreferences } from "@/types/practice";
 import { LanguageKey } from "@/constants/languageOptions";
 
-export const usePractice = (selectedLanguage: LanguageKey) => {
+export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized: boolean = true) => {
   const [currentText, setCurrentText] = useState<PracticeText | null>(null);
   const [input, setInput] = useState("");
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -49,17 +49,42 @@ export const usePractice = (selectedLanguage: LanguageKey) => {
     };
   }, []);
 
-  // 言語が変更されたときに新しい問題を選択
+  const reset = useCallback((includeCounter = false) => {
+    setInput("");
+    setStartTime(null);
+    setShake(false);
+    setMistakes(0);
+    if (includeCounter) {
+      setQuestionCount(0);
+      setIsSetFinished(false);
+      setSetResults([]);
+    }
+  }, []);
+
+  // 言語が変更されたときに新しい問題を選択（初期化完了後のみ）
   useEffect(() => {
+    console.log('usePractice: useEffect triggered', { selectedLanguage, isLanguageInitialized });
+
+    if (!isLanguageInitialized) {
+      console.log('usePractice: Language not initialized yet, skipping...');
+      return;
+    }
+
+    console.log('usePractice: Language changed to:', selectedLanguage);
+
     const preferences: UserPreferences = {
       language: selectedLanguage,
       difficulty: 'easy', // デフォルトはeasy
     };
 
+    console.log('usePractice: Creating preferences:', preferences);
+
     const text = practiceService.getRandomText(preferences);
+    console.log('usePractice: Selected text:', { id: text.id, language: text.language });
+
     setCurrentText(text);
     reset(true); // セットをリセット
-  }, [selectedLanguage]);
+  }, [selectedLanguage, isLanguageInitialized, reset]);
 
   // 振動効果をリセット
   useEffect(() => {
@@ -130,18 +155,6 @@ export const usePractice = (selectedLanguage: LanguageKey) => {
 
     return result;
   };
-
-  const reset = useCallback((includeCounter = false) => {
-    setInput("");
-    setStartTime(null);
-    setShake(false);
-    setMistakes(0);
-    if (includeCounter) {
-      setQuestionCount(0);
-      setIsSetFinished(false);
-      setSetResults([]);
-    }
-  }, []);
 
   const nextText = useCallback(() => {
     if (questionCount + 1 >= TOTAL_QUESTIONS_PER_SET) {
