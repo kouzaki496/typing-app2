@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`${inter.className} bg-background`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Layout>{children}</Layout>
         </ThemeProvider>
       </body>
