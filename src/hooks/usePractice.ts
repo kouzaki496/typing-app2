@@ -69,12 +69,14 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
 
     const preferences: UserPreferences = {
       language: selectedLanguage,
-      difficulty: 'easy', // デフォルトはeasy
     };
 
     const text = practiceService.getRandomText(preferences);
     setCurrentText(text);
     reset(true); // セットをリセット
+
+    // 言語変更時に最近使用された問題リストをクリア
+    practiceService.clearRecentlyUsed();
   }, [selectedLanguage, isLanguageInitialized, reset]);
 
   // 振動効果をリセット
@@ -151,7 +153,6 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
 
     const preferences: UserPreferences = {
       language: selectedLanguage,
-      difficulty: 'easy', // デフォルトはeasy
     };
 
     const newText = practiceService.getRandomText(preferences);
@@ -223,7 +224,6 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
 
     const preferences: UserPreferences = {
       language: selectedLanguage,
-      difficulty: 'easy', // デフォルトはeasy
     };
 
     const newText = practiceService.getRandomText(preferences);

@@ -372,11 +372,11 @@
     },
     {
       "id": "ts-function-overloads-038",
-      "text": "function process(x: number): number; function process(x: string): string;",
+      "text": "function process(x: number): number;",
       "category": "code",
       "tags": ["function-overloads", "advanced", "polymorphism"],
       "language": "typescript",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "createdAt": "2025-01-28T12:00:00Z",
       "updatedAt": "2025-01-28T12:00:00Z"
     },

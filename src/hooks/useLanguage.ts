@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { LanguageKey } from '@/constants/languageOptions';
+import { practiceService } from '@/lib/practiceService';
 
 export const useLanguage = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageKey>('javascript');
@@ -21,13 +22,18 @@ export const useLanguage = () => {
 
   // 言語選択を保存（同期的に処理）
   const selectLanguage = useCallback((language: LanguageKey) => {
+    // 言語が変更された場合のみ最近使用リストをクリア
+    if (language !== selectedLanguage) {
+      practiceService.clearRecentlyUsed();
+    }
+
     // 即座にローカルストレージに保存
     localStorage.setItem('selectedLanguage', language);
 
     // 状態を更新
     setSelectedLanguage(language);
     setIsLanguageModalOpen(false);
-  }, []);
+  }, [selectedLanguage]);
 
   // 言語選択モーダルを開く
   const openLanguageModal = useCallback(() => {

@@ -24,6 +24,6 @@ export interface PracticeSession {
 
 export interface UserPreferences {
   language: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty?: 'easy' | 'medium' | 'hard';
   category?: string;
 }

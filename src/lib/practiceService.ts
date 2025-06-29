@@ -3,6 +3,8 @@ import { PracticeText, UserPreferences } from '@/types/practice';
 
 class PracticeService {
   private texts: PracticeText[];
+  private recentlyUsedIds: string[] = []; // Setから配列に変更
+  private readonly MAX_RECENT_ITEMS = 15; // 最近使用された問題の最大数を増加
 
   constructor() {
     this.texts = practiceTexts.texts as PracticeText[];
@@ -51,7 +53,7 @@ class PracticeService {
   getTextsByPreferences(preferences: UserPreferences): PracticeText[] {
     return this.texts.filter(text => {
       const languageMatch = text.language === preferences.language;
-      const difficultyMatch = text.difficulty === preferences.difficulty;
+      const difficultyMatch = !preferences.difficulty || text.difficulty === preferences.difficulty;
       const categoryMatch = !preferences.category || text.category === preferences.category;
 
       return languageMatch && difficultyMatch && categoryMatch;
@@ -59,7 +61,7 @@ class PracticeService {
   }
 
   /**
-   * ランダムに問題を選択
+   * 最近使用された問題を避けてランダムに問題を選択
    */
   getRandomText(preferences?: UserPreferences): PracticeText {
     const availableTexts = preferences
@@ -77,10 +79,61 @@ class PracticeService {
         return this.texts[0];
       }
 
-      return fallbackTexts[Math.floor(Math.random() * fallbackTexts.length)];
+      return this.selectRandomTextAvoidingRecent(fallbackTexts);
     }
 
-    return availableTexts[Math.floor(Math.random() * availableTexts.length)];
+    return this.selectRandomTextAvoidingRecent(availableTexts);
+  }
+
+  /**
+   * 最近使用された問題を避けてランダム選択
+   */
+  private selectRandomTextAvoidingRecent(texts: PracticeText[]): PracticeText {
+    // 最近使用されていない問題をフィルタリング
+    const unusedTexts = texts.filter(text => !this.recentlyUsedIds.includes(text.id));
+
+    // 使用可能な問題がない場合は、最近使用された問題をリセット
+    if (unusedTexts.length === 0) {
+      console.log('All texts used, clearing recently used list');
+      this.recentlyUsedIds = [];
+      return this.selectRandomTextAvoidingRecent(texts);
+    }
+
+    // ランダムに選択
+    const selectedText = unusedTexts[Math.floor(Math.random() * unusedTexts.length)];
+
+    // 最近使用された問題リストに追加
+    this.addToRecentlyUsed(selectedText.id);
+
+    console.log(`Selected: ${selectedText.id} (${selectedText.language})`);
+    console.log(`Recently used: ${this.recentlyUsedIds.length}/${this.MAX_RECENT_ITEMS}`);
+
+    return selectedText;
+  }
+
+  /**
+   * 最近使用された問題リストに追加
+   */
+  private addToRecentlyUsed(textId: string | undefined): void {
+    if (textId) {
+      // 既に存在する場合は削除（重複を避ける）
+      this.recentlyUsedIds = this.recentlyUsedIds.filter(id => id !== textId);
+
+      // 新しい問題を先頭に追加
+      this.recentlyUsedIds.unshift(textId);
+
+      // 最大数を超えた場合は古いものを削除（FIFO）
+      if (this.recentlyUsedIds.length > this.MAX_RECENT_ITEMS) {
+        this.recentlyUsedIds = this.recentlyUsedIds.slice(0, this.MAX_RECENT_ITEMS);
+      }
+    }
+  }
+
+  /**
+   * 最近使用された問題リストをクリア
+   */
+  clearRecentlyUsed(): void {
+    this.recentlyUsedIds = [];
   }
 
   /**
