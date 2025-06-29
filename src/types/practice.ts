@@ -1,10 +1,12 @@
 export interface PracticeText {
   id: string;
   text: string;
-  language: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
-  category?: string;
-  description?: string;
+  category: 'code' | 'token';
+  tags: string[];
+  language: string | null;
+  difficulty: 'easy' | 'medium' | 'hard';
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface PracticeSession {
@@ -22,6 +24,6 @@ export interface PracticeSession {
 
 export interface UserPreferences {
   language: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  difficulty: 'easy' | 'medium' | 'hard';
   category?: string;
 }

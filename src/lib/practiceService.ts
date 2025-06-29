@@ -37,6 +37,15 @@ class PracticeService {
   }
 
   /**
+   * タグでフィルタリング
+   */
+  getTextsByTags(tags: string[]): PracticeText[] {
+    return this.texts.filter(text =>
+      tags.some(tag => text.tags.includes(tag))
+    );
+  }
+
+  /**
    * ユーザーの設定に基づいて問題を取得
    */
   getTextsByPreferences(preferences: UserPreferences): PracticeText[] {
@@ -85,7 +94,7 @@ class PracticeService {
    * 利用可能な言語の一覧を取得
    */
   getAvailableLanguages(): string[] {
-    return [...new Set(this.texts.map(text => text.language))];
+    return [...new Set(this.texts.map(text => text.language).filter((lang): lang is string => lang !== null))];
   }
 
   /**
@@ -99,7 +108,15 @@ class PracticeService {
    * 利用可能なカテゴリの一覧を取得
    */
   getAvailableCategories(): string[] {
-    return [...new Set(this.texts.map(text => text.category).filter((category): category is string => Boolean(category)))];
+    return [...new Set(this.texts.map(text => text.category))];
+  }
+
+  /**
+   * 利用可能なタグの一覧を取得
+   */
+  getAvailableTags(): string[] {
+    const allTags = this.texts.flatMap(text => text.tags);
+    return [...new Set(allTags)];
   }
 
   /**

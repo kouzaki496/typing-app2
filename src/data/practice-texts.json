@@ -79,6 +79,36 @@
       "difficulty": "medium",
       "createdAt": "2025-01-28T12:00:00Z",
       "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-interface-009",
+      "text": "interface User { name: string; age: number; }",
+      "category": "code",
+      "tags": ["interface", "types", "beginner"],
+      "language": "typescript",
+      "difficulty": "easy",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-generic-function-010",
+      "text": "function identity<T>(arg: T): T { return arg; }",
+      "category": "code",
+      "tags": ["generic", "function", "intermediate"],
+      "language": "typescript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-union-types-011",
+      "text": "type Status = 'loading' | 'success' | 'error';",
+      "category": "code",
+      "tags": ["union-types", "type", "intermediate"],
+      "language": "typescript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
     }
   ]
 }
