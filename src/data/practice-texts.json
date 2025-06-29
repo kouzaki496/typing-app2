@@ -1,68 +1,84 @@
 {
   "texts": [
     {
-      "id": "js-hello-world",
+      "id": "js-hello-world-001",
       "text": "console.log('Hello, World!');",
+      "category": "code",
+      "tags": ["output", "beginner", "basics"],
       "language": "javascript",
-      "difficulty": "beginner",
-      "category": "basics",
-      "description": "JavaScriptの基本的な出力文"
+      "difficulty": "easy",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "js-function",
+      "id": "js-function-002",
       "text": "function greet(name) { return `Hello, ${name}!`; }",
+      "category": "code",
+      "tags": ["function", "beginner", "template-literals"],
       "language": "javascript",
-      "difficulty": "beginner",
-      "category": "functions",
-      "description": "JavaScriptの関数定義"
+      "difficulty": "easy",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "js-arrow-function",
+      "id": "js-arrow-function-003",
       "text": "const add = (a, b) => a + b;",
+      "category": "code",
+      "tags": ["arrow-function", "intermediate", "es6"],
       "language": "javascript",
-      "difficulty": "intermediate",
-      "category": "functions",
-      "description": "アロー関数の定義"
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "js-array-methods",
+      "id": "js-array-methods-004",
       "text": "const numbers = [1, 2, 3, 4, 5].map(n => n * 2);",
+      "category": "code",
+      "tags": ["array", "map", "intermediate", "functional"],
       "language": "javascript",
-      "difficulty": "intermediate",
-      "category": "arrays",
-      "description": "配列のmapメソッド"
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "js-async-await",
+      "id": "js-async-await-005",
       "text": "async function fetchData() { const response = await fetch('/api/data'); return response.json(); }",
+      "category": "code",
+      "tags": ["async", "await", "fetch", "advanced", "api"],
       "language": "javascript",
-      "difficulty": "advanced",
-      "category": "async",
-      "description": "async/awaitを使用した非同期処理"
+      "difficulty": "hard",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "py-hello-world",
+      "id": "py-hello-world-006",
       "text": "print('Hello, World!')",
+      "category": "code",
+      "tags": ["output", "beginner", "basics"],
       "language": "python",
-      "difficulty": "beginner",
-      "category": "basics",
-      "description": "Pythonの基本的な出力文"
+      "difficulty": "easy",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "py-function",
+      "id": "py-function-007",
       "text": "def greet(name): return f'Hello, {name}!'",
+      "category": "code",
+      "tags": ["function", "beginner", "f-string"],
       "language": "python",
-      "difficulty": "beginner",
-      "category": "functions",
-      "description": "Pythonの関数定義"
+      "difficulty": "easy",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "py-list-comprehension",
+      "id": "py-list-comprehension-008",
       "text": "squares = [x**2 for x in range(10)]",
+      "category": "code",
+      "tags": ["list-comprehension", "intermediate", "functional"],
       "language": "python",
-      "difficulty": "intermediate",
-      "category": "lists",
-      "description": "リスト内包表記"
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
     }
   ]
 }
