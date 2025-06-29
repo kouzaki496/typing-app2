@@ -51,7 +51,107 @@
       "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "py-hello-world-006",
+      "id": "js-destructuring-006",
+      "text": "const { name, age } = user;",
+      "category": "code",
+      "tags": ["destructuring", "intermediate", "es6"],
+      "language": "javascript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "js-spread-operator-007",
+      "text": "const newArray = [...oldArray, newItem];",
+      "category": "code",
+      "tags": ["spread", "array", "intermediate", "es6"],
+      "language": "javascript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "js-class-008",
+      "text": "class Person { constructor(name) { this.name = name; } }",
+      "category": "code",
+      "tags": ["class", "constructor", "intermediate", "es6"],
+      "language": "javascript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "js-promise-009",
+      "text": "new Promise((resolve, reject) => { resolve('success'); });",
+      "category": "code",
+      "tags": ["promise", "async", "intermediate"],
+      "language": "javascript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "js-filter-010",
+      "text": "const evens = numbers.filter(n => n % 2 === 0);",
+      "category": "code",
+      "tags": ["filter", "array", "intermediate", "functional"],
+      "language": "javascript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "js-reduce-011",
+      "text": "const sum = numbers.reduce((acc, n) => acc + n, 0);",
+      "category": "code",
+      "tags": ["reduce", "array", "intermediate", "functional"],
+      "language": "javascript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "js-modules-012",
+      "text": "import { useState } from 'react';",
+      "category": "code",
+      "tags": ["import", "modules", "intermediate", "es6"],
+      "language": "javascript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "js-optional-chaining-013",
+      "text": "const name = user?.profile?.name;",
+      "category": "code",
+      "tags": ["optional-chaining", "intermediate", "es2020"],
+      "language": "javascript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "js-nullish-coalescing-014",
+      "text": "const value = input ?? 'default';",
+      "category": "code",
+      "tags": ["nullish-coalescing", "intermediate", "es2020"],
+      "language": "javascript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "js-generator-015",
+      "text": "function* generator() { yield 1; yield 2; }",
+      "category": "code",
+      "tags": ["generator", "advanced", "es6"],
+      "language": "javascript",
+      "difficulty": "hard",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-hello-world-016",
       "text": "print('Hello, World!')",
       "category": "code",
       "tags": ["output", "beginner", "basics"],
@@ -61,7 +161,7 @@
       "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "py-function-007",
+      "id": "py-function-017",
       "text": "def greet(name): return f'Hello, {name}!'",
       "category": "code",
       "tags": ["function", "beginner", "f-string"],
@@ -71,7 +171,7 @@
       "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "py-list-comprehension-008",
+      "id": "py-list-comprehension-018",
       "text": "squares = [x**2 for x in range(10)]",
       "category": "code",
       "tags": ["list-comprehension", "intermediate", "functional"],
@@ -81,7 +181,127 @@
       "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "ts-interface-009",
+      "id": "py-lambda-019",
+      "text": "add = lambda x, y: x + y",
+      "category": "code",
+      "tags": ["lambda", "function", "intermediate"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-class-020",
+      "text": "class Person: def __init__(self, name): self.name = name",
+      "category": "code",
+      "tags": ["class", "constructor", "intermediate", "oop"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-dict-comprehension-021",
+      "text": "squares = {x: x**2 for x in range(5)}",
+      "category": "code",
+      "tags": ["dict-comprehension", "intermediate", "dictionary"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-generator-022",
+      "text": "def generator(): yield 1; yield 2",
+      "category": "code",
+      "tags": ["generator", "intermediate", "iterator"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-decorator-023",
+      "text": "@decorator\ndef function(): pass",
+      "category": "code",
+      "tags": ["decorator", "intermediate", "function"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-context-manager-024",
+      "text": "with open('file.txt') as f: content = f.read()",
+      "category": "code",
+      "tags": ["context-manager", "file", "intermediate"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-enumerate-025",
+      "text": "for i, item in enumerate(items): print(i, item)",
+      "category": "code",
+      "tags": ["enumerate", "loop", "intermediate"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-zip-026",
+      "text": "for a, b in zip(list1, list2): print(a, b)",
+      "category": "code",
+      "tags": ["zip", "loop", "intermediate"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-map-filter-027",
+      "text": "result = list(map(lambda x: x*2, filter(lambda x: x > 0, numbers)))",
+      "category": "code",
+      "tags": ["map", "filter", "functional", "intermediate"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-reduce-028",
+      "text": "from functools import reduce; sum = reduce(lambda x, y: x + y, numbers)",
+      "category": "code",
+      "tags": ["reduce", "functional", "intermediate"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-async-await-029",
+      "text": "async def fetch_data(): response = await requests.get(url); return response.json()",
+      "category": "code",
+      "tags": ["async", "await", "advanced", "asyncio"],
+      "language": "python",
+      "difficulty": "hard",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "py-type-hints-030",
+      "text": "def greet(name: str) -> str: return f'Hello, {name}!'",
+      "category": "code",
+      "tags": ["type-hints", "intermediate", "typing"],
+      "language": "python",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-interface-031",
       "text": "interface User { name: string; age: number; }",
       "category": "code",
       "tags": ["interface", "types", "beginner"],
@@ -91,7 +311,7 @@
       "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "ts-generic-function-010",
+      "id": "ts-generic-function-032",
       "text": "function identity<T>(arg: T): T { return arg; }",
       "category": "code",
       "tags": ["generic", "function", "intermediate"],
@@ -101,12 +321,132 @@
       "updatedAt": "2025-01-28T12:00:00Z"
     },
     {
-      "id": "ts-union-types-011",
+      "id": "ts-union-types-033",
       "text": "type Status = 'loading' | 'success' | 'error';",
       "category": "code",
       "tags": ["union-types", "type", "intermediate"],
       "language": "typescript",
       "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-enum-034",
+      "text": "enum Color { Red = 'red', Green = 'green', Blue = 'blue' }",
+      "category": "code",
+      "tags": ["enum", "type", "intermediate"],
+      "language": "typescript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-type-assertion-035",
+      "text": "const length = (input as string).length;",
+      "category": "code",
+      "tags": ["type-assertion", "intermediate", "casting"],
+      "language": "typescript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-optional-properties-036",
+      "text": "interface Config { name: string; port?: number; }",
+      "category": "code",
+      "tags": ["optional-properties", "interface", "intermediate"],
+      "language": "typescript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-readonly-037",
+      "text": "interface Point { readonly x: number; readonly y: number; }",
+      "category": "code",
+      "tags": ["readonly", "interface", "intermediate"],
+      "language": "typescript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-function-overloads-038",
+      "text": "function process(x: number): number; function process(x: string): string;",
+      "category": "code",
+      "tags": ["function-overloads", "advanced", "polymorphism"],
+      "language": "typescript",
+      "difficulty": "hard",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-mapped-types-039",
+      "text": "type Partial<T> = { [P in keyof T]?: T[P]; }",
+      "category": "code",
+      "tags": ["mapped-types", "advanced", "utility-types"],
+      "language": "typescript",
+      "difficulty": "hard",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-conditional-types-040",
+      "text": "type NonNullable<T> = T extends null | undefined ? never : T;",
+      "category": "code",
+      "tags": ["conditional-types", "advanced", "utility-types"],
+      "language": "typescript",
+      "difficulty": "hard",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-namespace-041",
+      "text": "namespace Utils { export function format(data: string): string { return data; } }",
+      "category": "code",
+      "tags": ["namespace", "intermediate", "modules"],
+      "language": "typescript",
+      "difficulty": "medium",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-decorators-042",
+      "text": "@Component({ selector: 'app-root' }) export class AppComponent { }",
+      "category": "code",
+      "tags": ["decorators", "advanced", "angular"],
+      "language": "typescript",
+      "difficulty": "hard",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-generic-constraints-043",
+      "text": "function getProperty<T, K extends keyof T>(obj: T, key: K) { return obj[key]; }",
+      "category": "code",
+      "tags": ["generic-constraints", "advanced", "generics"],
+      "language": "typescript",
+      "difficulty": "hard",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-infer-keyword-044",
+      "text": "type ReturnType<T> = T extends (...args: any[]) => infer R ? R : any;",
+      "category": "code",
+      "tags": ["infer", "advanced", "conditional-types"],
+      "language": "typescript",
+      "difficulty": "hard",
+      "createdAt": "2025-01-28T12:00:00Z",
+      "updatedAt": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "ts-template-literal-types-045",
+      "text": "type EventName<T extends string> = `${T}Changed`;",
+      "category": "code",
+      "tags": ["template-literal-types", "advanced", "string-types"],
+      "language": "typescript",
+      "difficulty": "hard",
       "createdAt": "2025-01-28T12:00:00Z",
       "updatedAt": "2025-01-28T12:00:00Z"
     }
