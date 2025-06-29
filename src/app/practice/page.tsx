@@ -122,7 +122,6 @@ export default function Practice() {
         onRetry={closeModal}
         results={lastResult || { wpm: 0, accuracy: 0, elapsedTime: 0, mistakes: 0 }}
         setResults={setResults}
-        questionCount={questionCount}
       />
     </div>
   );

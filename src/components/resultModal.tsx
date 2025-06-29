@@ -18,15 +18,13 @@ type ResultModalProps = {
     mistakes: number;
     textId: string;
   }>;
-  questionCount?: number;
 };
 
 export const ResultModal: React.FC<ResultModalProps> = ({
   isOpen,
   onRetry,
   results,
-  setResults = [],
-  questionCount = 0
+  setResults = []
 }) => {
   const router = useRouter();
 
