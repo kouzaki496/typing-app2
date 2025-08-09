@@ -287,6 +287,24 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
     setCurrentText(newText);
   };
 
+  // 開発用: 現在の問題をスキップ
+  const skipCurrentText = useCallback(() => {
+    if (process.env.NODE_ENV === 'development') {
+      nextText();
+    }
+  }, [nextText]);
+
+  // 開発用: 自動完成
+  const autoComplete = useCallback(() => {
+    if (process.env.NODE_ENV === 'development' && currentText) {
+      setInput(currentText.text);
+      // startTimeが未設定の場合は設定
+      if (!startTime) {
+        setStartTime(Date.now());
+      }
+    }
+  }, [currentText, startTime]);
+
   return {
     currentText,
     input,
@@ -307,6 +325,9 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
     lastResult,
     setResults,
     TOTAL_QUESTIONS_PER_SET,
+    // 開発用機能
+    skipCurrentText,
+    autoComplete,
   };
 };
 

@@ -55,7 +55,7 @@ export const ResultModal: React.FC<ResultModalProps> = ({
               <div className="text-sm text-muted-foreground">WPM</div>
             </div>
             <div className="bg-accent/20 p-3 rounded-lg text-center border border-accent/30">
-              <div className="text-2xl font-bold text-accent-foreground">{results.accuracy}%</div>
+              <div className="text-2xl font-bold text-foreground">{results.accuracy}%</div>
               <div className="text-sm text-muted-foreground">正確率</div>
             </div>
           </div>

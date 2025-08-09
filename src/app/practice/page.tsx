@@ -7,6 +7,10 @@ import { ResultModal } from "@/components/resultModal";
 import LanguageSelectModal from "@/components/languageSelectModal";
 import { Button } from "@/components/ui/button";
 import { languageOptions } from "@/constants/languageOptions";
+import { useEffect } from "react";
+
+// 開発モードかどうかを判定
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 export default function Practice() {
   const {
@@ -33,7 +37,30 @@ export default function Practice() {
     setResults,
     questionCount,
     TOTAL_QUESTIONS_PER_SET,
+    skipCurrentText,
+    autoComplete,
   } = usePractice(selectedLanguage, isInitialized);
+
+  // 開発モード用のキーボードショートカット
+  useEffect(() => {
+    if (!isDevelopment) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl + S でスキップ
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        skipCurrentText();
+      }
+      // Ctrl + Enter で自動完成
+      if (e.ctrlKey && e.key === 'Enter') {
+        e.preventDefault();
+        autoComplete();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [skipCurrentText, autoComplete]);
 
   if (!isInitialized) {
     return (
@@ -108,6 +135,34 @@ export default function Practice() {
         <p>ミス回数: {mistakes}</p>
         <p>進捗: {input.length} / {currentText.text.length}</p>
       </div>
+
+      {/* 開発モード用のコントロール */}
+      {isDevelopment && (
+        <div className="flex gap-2 mt-4 p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+          <div className="text-xs text-yellow-700 dark:text-yellow-400 mr-4">
+            <strong>開発モード:</strong>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={skipCurrentText}
+            className="text-xs"
+          >
+            スキップ (Ctrl+S)
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={autoComplete}
+            className="text-xs"
+          >
+            自動完成 (Ctrl+Enter)
+          </Button>
+          <div className="text-xs text-muted-foreground ml-2 flex items-center">
+            ショートカット: Ctrl+S (スキップ), Ctrl+Enter (自動完成)
+          </div>
+        </div>
+      )}
 
       {/* 言語選択モーダル */}
       <LanguageSelectModal
