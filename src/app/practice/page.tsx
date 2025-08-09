@@ -33,7 +33,6 @@ export default function Practice() {
     showResultModal,
     closeModal,
     mistakes,
-    keyMistakes,
     setResults,
     questionCount,
     TOTAL_QUESTIONS_PER_SET,
