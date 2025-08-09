@@ -289,14 +289,16 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
 
   // 開発用: 現在の問題をスキップ
   const skipCurrentText = useCallback(() => {
-    if (process.env.NODE_ENV === 'development') {
+    const isDevelopment = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENABLE_DEV_MODE === 'true';
+    if (isDevelopment) {
       nextText();
     }
   }, [nextText]);
 
   // 開発用: 自動完成
   const autoComplete = useCallback(() => {
-    if (process.env.NODE_ENV === 'development' && currentText) {
+    const isDevelopment = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENABLE_DEV_MODE === 'true';
+    if (isDevelopment && currentText) {
       setInput(currentText.text);
       // startTimeが未設定の場合は設定
       if (!startTime) {

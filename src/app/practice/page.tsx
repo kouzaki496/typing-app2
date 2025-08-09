@@ -10,7 +10,7 @@ import { languageOptions } from "@/constants/languageOptions";
 import { useEffect } from "react";
 
 // 開発モードかどうかを判定
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENABLE_DEV_MODE === 'true';
 
 export default function Practice() {
   const {
