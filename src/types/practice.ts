@@ -27,3 +27,20 @@ export interface UserPreferences {
   difficulty?: 'easy' | 'medium' | 'hard';
   category?: string;
 }
+
+export interface KeyMistake {
+  key: string;
+  mistakeCount: number;
+  expectedKey: string;
+  position: number;
+}
+
+export interface WeakKeyAnalysis {
+  totalMistakes: number;
+  keyMistakes: Record<string, number>; // キー -> ミス回数
+  mostMistakenKeys: Array<{
+    key: string;
+    count: number;
+    percentage: number;
+  }>;
+}

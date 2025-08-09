@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import React from "react";
 import { practiceService } from "@/lib/practiceService";
-import { PracticeText, UserPreferences } from "@/types/practice";
+import { PracticeText, UserPreferences, KeyMistake, WeakKeyAnalysis } from "@/types/practice";
 import { LanguageKey } from "@/constants/languageOptions";
 
 export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized: boolean = true) => {
@@ -23,13 +23,19 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
     elapsedTime: number;
     mistakes: number;
     textId: string;
+    keyMistakes?: KeyMistake[];
   }>>([]);
+
+  // キーごとのミス記録
+  const [keyMistakes, setKeyMistakes] = useState<KeyMistake[]>([]);
+  const [allSetKeyMistakes, setAllSetKeyMistakes] = useState<KeyMistake[]>([]);
 
   const [lastResult, setLastResult] = useState<{
     wpm: number;
     accuracy: number;
     elapsedTime: number;
     mistakes: number;
+    weakKeyAnalysis?: WeakKeyAnalysis;
   } | null>(null);
 
   // セット全体の結果を計算
@@ -49,15 +55,43 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
     };
   }, []);
 
+  // 苦手キー分析を生成
+  const generateWeakKeyAnalysis = useCallback((allKeyMistakes: KeyMistake[]): WeakKeyAnalysis => {
+    const keyMistakeMap: Record<string, number> = {};
+    let totalMistakes = 0;
+
+    allKeyMistakes.forEach(mistake => {
+      keyMistakeMap[mistake.expectedKey] = (keyMistakeMap[mistake.expectedKey] || 0) + 1;
+      totalMistakes++;
+    });
+
+    const mostMistakenKeys = Object.entries(keyMistakeMap)
+      .map(([key, count]) => ({
+        key,
+        count,
+        percentage: Math.round((count / totalMistakes) * 100)
+      }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5); // 上位5つのキーを表示
+
+    return {
+      totalMistakes,
+      keyMistakes: keyMistakeMap,
+      mostMistakenKeys
+    };
+  }, []);
+
   const reset = useCallback((includeCounter = false) => {
     setInput("");
     setStartTime(null);
     setShake(false);
     setMistakes(0);
+    setKeyMistakes([]);
     if (includeCounter) {
       setQuestionCount(0);
       setIsSetFinished(false);
       setSetResults([]);
+      setAllSetKeyMistakes([]);
     }
   }, []);
 
@@ -108,6 +142,22 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
       // ミスタイプ時は振動のみ、入力は更新しない
       setShake(true);
       setMistakes(prev => prev + 1);
+
+      // キーミスを記録
+      const expectedKey = expectedText[nextValue.length - 1] || '';
+      const typedKey = nextValue[nextValue.length - 1] || '';
+
+      if (expectedKey && typedKey) {
+        const keyMistake: KeyMistake = {
+          key: typedKey,
+          expectedKey: expectedKey,
+          mistakeCount: 1,
+          position: nextValue.length - 1
+        };
+
+        setKeyMistakes(prev => [...prev, keyMistake]);
+        setAllSetKeyMistakes(prev => [...prev, keyMistake]);
+      }
     }
   };
 
@@ -193,6 +243,7 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
         elapsedTime,
         mistakes,
         textId: currentText?.id || '',
+        keyMistakes: [...keyMistakes],
       };
 
       setSetResults(prev => {
@@ -201,7 +252,13 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
         // 3問目が完了した場合、セット全体の結果を計算
         if (newResults.length === TOTAL_QUESTIONS_PER_SET) {
           const setResult = calculateSetResults(newResults);
-          setLastResult(setResult);
+          const weakKeyAnalysis = generateWeakKeyAnalysis(allSetKeyMistakes);
+          if (setResult) {
+            setLastResult({
+              ...setResult,
+              weakKeyAnalysis
+            });
+          }
         }
 
         return newResults;
@@ -236,6 +293,7 @@ export const usePractice = (selectedLanguage: LanguageKey, isLanguageInitialized
     startTime,
     shake,
     mistakes,
+    keyMistakes,
     inputRef,
     handleChange,
     renderText,

@@ -29,6 +29,7 @@ export default function Practice() {
     showResultModal,
     closeModal,
     mistakes,
+    keyMistakes,
     setResults,
     questionCount,
     TOTAL_QUESTIONS_PER_SET,
@@ -98,7 +99,7 @@ export default function Practice() {
         {input === ""
           ? "入力を開始してください"
           : currentText.text.startsWith(input)
-          ? "正しい入力中…"
+          ? "入力中…"
           : "ミスがあります！"}
       </p>
 

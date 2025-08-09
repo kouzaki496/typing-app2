@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { WeakKeyAnalysis } from "@/types/practice";
 
 type ResultModalProps = {
   isOpen: boolean;
@@ -10,6 +11,7 @@ type ResultModalProps = {
     accuracy: number;
     elapsedTime: number;
     mistakes: number;
+    weakKeyAnalysis?: WeakKeyAnalysis;
   };
   setResults?: Array<{
     wpm: number;
@@ -48,22 +50,22 @@ export const ResultModal: React.FC<ResultModalProps> = ({
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-3 text-center">セット全体の結果</h3>
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="bg-primary/10 p-3 rounded-lg text-center">
+            <div className="bg-primary/10 p-3 rounded-lg text-center border border-primary/20">
               <div className="text-2xl font-bold text-primary">{results.wpm}</div>
               <div className="text-sm text-muted-foreground">WPM</div>
             </div>
-            <div className="bg-green-500/10 p-3 rounded-lg text-center">
-              <div className="text-2xl font-bold text-green-600">{results.accuracy}%</div>
+            <div className="bg-accent/20 p-3 rounded-lg text-center border border-accent/30">
+              <div className="text-2xl font-bold text-accent-foreground">{results.accuracy}%</div>
               <div className="text-sm text-muted-foreground">正確率</div>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-orange-500/10 p-3 rounded-lg text-center">
-              <div className="text-lg font-bold text-orange-600">{results.mistakes}</div>
+            <div className="bg-muted p-3 rounded-lg text-center border border-border">
+              <div className="text-lg font-bold text-foreground">{results.mistakes}</div>
               <div className="text-sm text-muted-foreground">ミスタイプ数</div>
             </div>
-            <div className="bg-blue-500/10 p-3 rounded-lg text-center">
-              <div className="text-lg font-bold text-blue-600">{results.elapsedTime.toFixed(1)}秒</div>
+            <div className="bg-secondary p-3 rounded-lg text-center border border-border">
+              <div className="text-lg font-bold text-secondary-foreground">{results.elapsedTime.toFixed(1)}秒</div>
               <div className="text-sm text-muted-foreground">所要時間</div>
             </div>
           </div>
@@ -88,6 +90,51 @@ export const ResultModal: React.FC<ResultModalProps> = ({
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* 苦手キー分析 */}
+        {results.weakKeyAnalysis && results.weakKeyAnalysis.totalMistakes > 0 && (
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-3">苦手キー分析</h3>
+                        <div className="bg-destructive/5 p-4 rounded-lg border border-destructive/20">
+              <div className="mb-3">
+                <span className="text-sm text-muted-foreground">
+                  総ミス回数: <span className="font-semibold text-destructive">{results.weakKeyAnalysis.totalMistakes}回</span>
+                </span>
+              </div>
+
+              {results.weakKeyAnalysis.mostMistakenKeys.length > 0 && (
+                <div>
+                  <h4 className="text-sm font-medium mb-2 text-destructive">
+                    よくミスするキー（上位5つ）
+                  </h4>
+                  <div className="space-y-2">
+                    {results.weakKeyAnalysis.mostMistakenKeys.map((keyData, index) => (
+                      <div key={keyData.key} className="flex items-center justify-between bg-muted/50 p-2 rounded border border-border">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs font-medium text-muted-foreground">#{index + 1}</span>
+                          <span className="font-mono text-lg font-bold bg-accent/20 px-2 py-1 rounded border border-accent/30">
+                            {keyData.key === ' ' ? '[ スペース ]' : keyData.key}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <span className="font-semibold text-destructive">{keyData.count}回</span>
+                          <span className="text-muted-foreground">({keyData.percentage}%)</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-3 p-2 bg-primary/5 rounded border border-primary/20">
+                    <p className="text-xs text-primary">
+                      💡 <strong>アドバイス:</strong>
+                      これらのキーを重点的に練習することで、タイピング精度の向上が期待できます。
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
